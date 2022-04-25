@@ -1,0 +1,23 @@
+{
+  "name": "@hexlet/code",
+  "version": "0.0.1",
+  "description": "[![Actions Status](https://github.com/Sverxsro4nik/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/Sverxsro4nik/frontend-project-lvl3/actions)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sverxsro4nik/frontend-project-lvl3.git"
+  },
+  "keywords": [
+    "rss",
+    "generator"
+  ],
+  "author": "Sverxsro4nik@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sverxsro4nik/frontend-project-lvl3/issues"
+  },
+  "homepage": "https://github.com/Sverxsro4nik/frontend-project-lvl3#readme"
+}
