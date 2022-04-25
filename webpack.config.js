@@ -14,6 +14,7 @@ module.exports = {
     liveReload: true,
     compress: false,
     port: 9000,
+    open: true,
   },
   plugins: [
     new CleanWebpackPlugin(),

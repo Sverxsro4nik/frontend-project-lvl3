@@ -1,3 +1,9 @@
 import 'bootstrap';
+import './style/style.css';
+import createForm from './createForm.js';
 
-console.log('Hello World!');
+const app = () => {
+  document.body.append(createForm());
+};
+
+app();
