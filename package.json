@@ -19,5 +19,15 @@
   "bugs": {
     "url": "https://github.com/Sverxsro4nik/frontend-project-lvl3/issues"
   },
-  "homepage": "https://github.com/Sverxsro4nik/frontend-project-lvl3#readme"
+  "homepage": "https://github.com/Sverxsro4nik/frontend-project-lvl3#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
 }
