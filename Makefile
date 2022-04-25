@@ -4,6 +4,9 @@ install-deps:
 				npm ci
 
 lint:
-				npm eslint . --fix
+				npx eslint . --fix
 publish:
 				npm publish --dry-run
+
+push:
+				git push origin main
