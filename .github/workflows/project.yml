@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: getDiff
+name: RSS project
 
 # Controls when the workflow will run
 on:
@@ -28,4 +28,4 @@ jobs:
         with:
           node-version: '16'
       - run: make install
-      - run: make lint
+      # - run: make lint
