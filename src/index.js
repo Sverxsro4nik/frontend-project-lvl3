@@ -1,9 +1,9 @@
 import 'bootstrap';
 import './style/style.css';
-import createForm from './createForm.js';
+import createStartLayout from './createStartLayout.js';
 
 const app = () => {
-  document.body.append(createForm());
+  createStartLayout();
 };
 
 app();
