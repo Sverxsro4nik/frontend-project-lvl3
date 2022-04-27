@@ -1,9 +1,3 @@
-import 'bootstrap';
-import './style/style.css';
-import createStartLayout from './createStartLayout.js';
+import runApp from './runApp.js';
 
-const app = () => {
-  createStartLayout();
-};
-
-app();
+runApp();
