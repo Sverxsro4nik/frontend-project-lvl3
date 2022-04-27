@@ -32,13 +32,11 @@ const app = () => {
   const watcher = view(state);
   const controller = () => {
     const rssForm = document.querySelector('.rss-form');
-    const urlInput = document.getElementById('url-input');
     rssForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      console.log('work');
-      watcher.rssForm.urlPath = urlInput.value;
-      watcher.errors = validate(urlInput.value);
-      console.log(state);
+      const formValue = new FormData(e.target);
+      const value = formValue.get('url');
+      watcher.rssForm.urlPath = validate(value);
     });
   };
   controller(state);
