@@ -1,11 +1,9 @@
 import onChange from 'on-change';
-import state from './state.js';
 
-const watcherInput = onChange(state, (path, current, prepend) => {
+const watcher = (state) => onChange(state, (path, value) => {
   console.log(path);
-  console.log(prepend);
-  console.log(current);
+  console.log(state);
+  console.log(value);
 });
 
-// eslint-disable-next-line import/prefer-default-export
-export { watcherInput };
+export default watcher;

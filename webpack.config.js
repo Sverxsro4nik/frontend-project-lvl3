@@ -16,12 +16,6 @@ module.exports = {
     port: 9000,
     open: true,
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'index.html',
-    }),
-  ],
   module: {
     rules: [
       {
@@ -33,4 +27,10 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
+  ],
 };
