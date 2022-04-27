@@ -25,7 +25,7 @@ const view = (state) => onChange(state, (path, current, prepend) => {
 const app = () => {
   const state = {
     rssForm: {
-      urlPath: '',
+      urls: [],
     },
     errors: {},
   };
@@ -36,7 +36,7 @@ const app = () => {
       e.preventDefault();
       const formValue = new FormData(e.target);
       const value = formValue.get('url');
-      watcher.rssForm.urlPath = validate(value);
+      watcher.rssForm.urls = validate(value);
     });
   };
   controller(state);
