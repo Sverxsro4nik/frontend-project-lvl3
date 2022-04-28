@@ -1,7 +1,13 @@
 import i18next from 'i18next';
+import axios from 'axios';
 import view from './view.js';
 import validate from './validate.js';
 import resources from './locales/locales.js';
+import parser from './parser.js';
+
+const routes = {
+  getPathRss: (path) => `https://allorigins.hexlet.app/get?url=${encodeURIComponent(path)}`,
+};
 
 const app = () => {
   const defaultLanguage = 'ru';
@@ -32,9 +38,13 @@ const app = () => {
           watcher.status.validation = 'valid';
           watcher.rssForm.urls = [value, ...watcher.rssForm.urls];
         }
-        console.log(state.rssForm.urls);
       }).catch(() => {
         watcher.status.validation = 'invalid';
+      }).then(() => {
+        axios.get(routes.getPathRss(value)).then((response) => {
+          const data = parser(response.data.contents);
+          console.log(data);
+        });
       });
     });
   });

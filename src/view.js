@@ -1,12 +1,12 @@
 import onChange from 'on-change';
 
-const view = (state, text) => onChange(state, (path, current, prepend) => {
+const view = (state, text) => onChange(state, (path, current) => {
   const feedback = document.querySelector('.feedback');
-  console.log('path', path);
-  console.log('current', current);
-  console.log('prepend', prepend);
-  console.log('state', state);
-  console.log(text);
+  // console.log('path', path);
+  // console.log('current', current);
+  // console.log('prepend', prepend);
+  // console.log('state', state);
+  // console.log(text);
   if (state.status.validation === 'valid') {
     feedback.classList.remove('text-danger');
     feedback.classList.add('text-success');
