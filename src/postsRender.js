@@ -30,7 +30,7 @@ const createFeedsField = (feeds) => {
 };
 
 const createPostsField = (posts) => {
-
+  
 };
 
 const postsRender = (feeds, posts) => {
