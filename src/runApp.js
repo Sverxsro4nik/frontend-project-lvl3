@@ -1,8 +1,4 @@
-// import watcher from './view.js';
-// import controller from './controller.js';
-
 import onChange from 'on-change';
-import _ from 'lodash';
 import validate from './validate.js';
 
 const view = (state) => onChange(state, (path, current, prepend) => {
@@ -11,14 +7,15 @@ const view = (state) => onChange(state, (path, current, prepend) => {
   console.log('current', current);
   console.log('prepend', prepend);
   console.log('state', state);
-  if (path === 'rssForm.urlPath' && _.isEmpty(state.errors)) {
+  if (state.status.validation === 'valid') {
     feedback.classList.remove('text-danger');
     feedback.classList.add('text-success');
     feedback.textContent = 'RSS успешно загружен';
   } else {
     feedback.classList.remove('text-success');
     feedback.classList.add('text-danger');
-    feedback.textContent = 'Ссылка должна быть валидным URL';
+    const textInFeed = current === 'invalid' ? 'Ссылка должна быть валидным URL' : 'RSS уже существует';
+    feedback.textContent = textInFeed;
   }
 });
 
@@ -27,7 +24,9 @@ const app = () => {
     rssForm: {
       urls: [],
     },
-    errors: {},
+    status: {
+      validation: 'invalid',
+    },
   };
   const watcher = view(state);
   const controller = () => {
@@ -36,7 +35,17 @@ const app = () => {
       e.preventDefault();
       const formValue = new FormData(e.target);
       const value = formValue.get('url');
-      watcher.rssForm.urls = validate(value);
+      validate(value).then(() => {
+        if (watcher.rssForm.urls.includes(value)) {
+          watcher.status.validation = 'present';
+        } else {
+          watcher.status.validation = 'valid';
+          watcher.rssForm.urls = [value, ...watcher.rssForm.urls];
+        }
+        console.log(state.rssForm.urls);
+      }).catch(() => {
+        watcher.status.validation = 'invalid';
+      });
     });
   };
   controller(state);
