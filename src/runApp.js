@@ -4,6 +4,7 @@ import view from './view.js';
 import validate from './validate.js';
 import resources from './locales/locales.js';
 import parser from './parser.js';
+import postsRender from './postsRender.js';
 
 const routes = {
   getPathRss: (path) => `https://allorigins.hexlet.app/get?url=${encodeURIComponent(path)}`,
@@ -14,13 +15,15 @@ const app = () => {
   const i18nextInstance = i18next.createInstance();
   i18nextInstance.init({
     lng: defaultLanguage,
-    debug: true,
+    debug: false,
     resources,
   }).then(() => {
     const state = {
       rssForm: {
         urls: [],
       },
+      feeds: [],
+      posts: [],
       status: {
         validation: 'invalid',
       },
@@ -43,7 +46,10 @@ const app = () => {
       }).then(() => {
         axios.get(routes.getPathRss(value)).then((response) => {
           const data = parser(response.data.contents);
-          console.log(data);
+          const { feed, posts } = data;
+          watcher.feeds = [feed, ...state.feeds];
+          watcher.posts = [feed, ...state.posts];
+          postsRender(state.feeds, state.posts);
         });
       });
     });

@@ -11,13 +11,11 @@ const parser = (data) => {
   const feedPosts = Array.from(parcingData.querySelectorAll('item'));
   const posts = [];
   feedPosts.forEach((post) => {
-    console.log(post);
     const postId = post.querySelector('link').textContent.trim();
     const postsTitle = post.querySelector('title').textContent.trim();
     const postDescription = post.querySelector('description').textContent.trim();
     posts.push({ postId, postsTitle, postDescription });
   });
-  console.log(posts);
   return { feed, posts };
 };
 
