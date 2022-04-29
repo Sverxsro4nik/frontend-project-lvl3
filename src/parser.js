@@ -11,10 +11,12 @@ const parser = (data) => {
   const feedPosts = Array.from(parcingData.querySelectorAll('item'));
   const posts = [];
   feedPosts.forEach((post) => {
-    const postId = post.querySelector('link').textContent.trim();
-    const postsTitle = post.querySelector('title').textContent.trim();
+    const postTitle = post.querySelector('title').textContent.trim();
+    const postLink = post.querySelector('link').textContent.trim();
     const postDescription = post.querySelector('description').textContent.trim();
-    posts.push({ postId, postsTitle, postDescription });
+    posts.push({
+      postTitle, postLink, postDescription,
+    });
   });
   return { feed, posts };
 };

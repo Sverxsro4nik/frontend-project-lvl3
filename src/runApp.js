@@ -26,6 +26,7 @@ const app = () => {
       posts: [],
       status: {
         validation: 'invalid',
+        buttonDisabled: 'disabled',
       },
     };
     const rssForm = document.querySelector('.rss-form');
@@ -37,18 +38,22 @@ const app = () => {
       validate(value).then(() => {
         if (watcher.rssForm.urls.includes(value)) {
           watcher.status.validation = 'present';
+          watcher.status.buttonDisabled = true;
         } else {
+          watcher.status.buttonDisabled = false;
           watcher.status.validation = 'valid';
           watcher.rssForm.urls = [value, ...watcher.rssForm.urls];
         }
       }).catch(() => {
         watcher.status.validation = 'invalid';
+        watcher.status.buttonDisabled = true;
       }).then(() => {
         axios.get(routes.getPathRss(value)).then((response) => {
           const data = parser(response.data.contents);
           const { feed, posts } = data;
+          console.log(feed);
           watcher.feeds = [feed, ...state.feeds];
-          watcher.posts = [feed, ...state.posts];
+          watcher.posts = posts.concat(state.posts);
           postsRender(state.feeds, state.posts);
         });
       });

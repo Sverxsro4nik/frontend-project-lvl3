@@ -2,7 +2,8 @@ import onChange from 'on-change';
 
 const view = (state, text) => onChange(state, (path, current) => {
   const feedback = document.querySelector('.feedback');
-  // console.log('path', path);
+  const addButton = document.querySelector('[aria-label=add]');
+  console.log('path', path);
   // console.log('current', current);
   // console.log('prepend', prepend);
   // console.log('state', state);
@@ -16,6 +17,9 @@ const view = (state, text) => onChange(state, (path, current) => {
     feedback.classList.add('text-danger');
     const textInFeed = current === 'invalid' ? 'Ссылка должна быть валидным URL' : 'RSS уже существует';
     feedback.textContent = textInFeed;
+  }
+  if (path === 'status.buttonDisabled') {
+    addButton.disabled = current;
   }
 });
 
