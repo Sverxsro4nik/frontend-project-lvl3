@@ -26,7 +26,7 @@ const app = () => {
       posts: [],
       status: {
         validation: 'invalid',
-        buttonDisabled: 'disabled',
+        loadData: 'loading',
       },
     };
     const rssForm = document.querySelector('.rss-form');
@@ -35,27 +35,28 @@ const app = () => {
       e.preventDefault();
       const formValue = new FormData(e.target);
       const value = formValue.get('url');
-      validate(value).then(() => {
-        if (watcher.rssForm.urls.includes(value)) {
-          watcher.status.validation = 'present';
-          watcher.status.buttonDisabled = true;
-        } else {
-          watcher.status.buttonDisabled = false;
+      validate(value, i18nextInstance).then(() => {
+        if (!watcher.rssForm.urls.includes(value)) {
+          watcher.rssForm.urls.unshift(value);
           watcher.status.validation = 'valid';
-          watcher.rssForm.urls = [value, ...watcher.rssForm.urls];
+        } else {
+          watcher.status.validation = 'present';
         }
       }).catch(() => {
         watcher.status.validation = 'invalid';
-        watcher.status.buttonDisabled = true;
       }).then(() => {
-        axios.get(routes.getPathRss(value)).then((response) => {
-          const data = parser(response.data.contents);
-          const { feed, posts } = data;
-          console.log(feed);
-          watcher.feeds = [feed, ...state.feeds];
-          watcher.posts = posts.concat(state.posts);
-          postsRender(state.feeds, state.posts);
-        });
+        if (watcher.status.validation === 'valid') {
+          axios.get(routes.getPathRss(value)).then((response) => {
+            const data = parser(response.data.contents);
+            const { feed, posts } = data;
+            watcher.feeds = [feed, ...state.feeds];
+            watcher.posts = posts.concat(state.posts);
+            postsRender(state.feeds, state.posts);
+            rssForm.reset();
+          }).catch((error) => {
+            console.log(error);
+          });
+        }
       });
     });
   });

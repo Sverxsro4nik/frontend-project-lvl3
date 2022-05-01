@@ -30,7 +30,6 @@ const createFeedsField = (feeds) => {
 };
 
 const createPostsField = (posts) => {
-  console.log(posts);
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
   const cardBody = document.createElement('div');
@@ -43,7 +42,6 @@ const createPostsField = (posts) => {
   const postsList = document.createElement('ul');
   postsList.classList.add('list-group', 'border-0', 'rounded-0');
   posts.forEach((post) => {
-    console.log(post);
     const { postTitle, postLink } = post;
     const item = document.createElement('li');
     item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
@@ -68,7 +66,6 @@ const createPostsField = (posts) => {
 const postsRender = (feeds, posts) => {
   const feedsDiv = document.querySelector('.feeds');
   const postsDiv = document.querySelector('.posts');
-  console.log(feeds);
   const allFeeds = createFeedsField(feeds);
   const allPosts = createPostsField(posts);
   feedsDiv.replaceChildren(allFeeds, allFeeds);
