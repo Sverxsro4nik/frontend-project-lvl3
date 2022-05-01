@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import _ from 'lodash';
 import axios from 'axios';
 import view from './view.js';
 import validate from './validate.js';
@@ -29,8 +30,31 @@ const app = () => {
         loadData: 'loading',
       },
     };
+
     const rssForm = document.querySelector('.rss-form');
     const watcher = view(state, i18nextInstance);
+    const updatePosts = () => {
+      watcher.status.loadData = 'loading';
+      setTimeout(() => {
+        const urlLinks = watcher.rssForm.urls;
+        Promise.all(urlLinks.map((link) => axios.get(routes.getPathRss(link))
+          .then((response) => parser(response.data.contents))
+          .then(({ posts }) => posts))).then((data) => {
+          console.log(data.flat());
+          const postDiff = _.differenceWith(data, watcher.posts, _.isEqual);
+          console.log(postDiff);
+          console.log(state);
+          watcher.posts = postDiff.flat();
+          console.log(state);
+          postsRender(state.feeds, watcher.posts);
+          watcher.status.loadData = 'upload';
+          updatePosts();
+        }).catch((err) => {
+          console.log(err);
+          updatePosts();
+        });
+      }, 5000);
+    };
     rssForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const formValue = new FormData(e.target);
@@ -46,6 +70,7 @@ const app = () => {
         watcher.status.validation = 'invalid';
       }).then(() => {
         if (watcher.status.validation === 'valid') {
+          watcher.status.loadData = 'loading';
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
             const { feed, posts } = data;
@@ -53,6 +78,9 @@ const app = () => {
             watcher.posts = posts.concat(state.posts);
             postsRender(state.feeds, state.posts);
             rssForm.reset();
+            if (watcher.status.loadData === 'loading') {
+              updatePosts();
+            }
           }).catch((error) => {
             console.log(error);
           });
