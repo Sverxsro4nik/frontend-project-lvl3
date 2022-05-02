@@ -34,6 +34,8 @@ const app = () => {
     };
 
     const rssForm = document.querySelector('.rss-form');
+    const postsContainer = document.querySelector('.posts');
+    console.log(postsContainer);
     const watcher = view(state, i18nextInstance);
     const updatePosts = () => {
       watcher.status.loadData = 'loading';
@@ -84,6 +86,10 @@ const app = () => {
           });
         }
       });
+    });
+    postsContainer.addEventListener('click', (e) => {
+      const elem = e.target;
+      console.log(elem);
     });
   });
 };

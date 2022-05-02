@@ -42,17 +42,19 @@ const createPostsField = (posts) => {
   const postsList = document.createElement('ul');
   postsList.classList.add('list-group', 'border-0', 'rounded-0');
   posts.forEach((post) => {
-    const { postTitle, postLink } = post;
+    const { postTitle, postLink, postId } = post;
     const item = document.createElement('li');
     item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
     const link = document.createElement('a');
     link.classList.add('fw-bold');
+    link.setAttribute('data-post-id', postId);
     link.setAttribute('href', postLink);
     link.target = '_blank';
     link.setAttribute('rel', 'noopener noreferrer');
     link.textContent = postTitle;
     const postButton = document.createElement('button');
     postButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
+    postButton.setAttribute('data-post-id', postId);
     postButton.setAttribute('data-bs-toggle', 'modal');
     postButton.textContent = 'Просмотр';
     item.append(link);
