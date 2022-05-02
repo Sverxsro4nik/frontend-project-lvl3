@@ -8,7 +8,7 @@ import parser from './parser.js';
 import postsRender from './postsRender.js';
 
 const routes = {
-  getPathRss: (path) => `https://allorigins.hexlet.app/get?url=${encodeURIComponent(path)}`,
+  getPathRss: (path) => `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(path)}`,
 };
 
 const app = () => {
@@ -40,12 +40,8 @@ const app = () => {
         Promise.all(urlLinks.map((link) => axios.get(routes.getPathRss(link))
           .then((response) => parser(response.data.contents))
           .then(({ posts }) => posts))).then((data) => {
-          console.log(data.flat());
-          const postDiff = _.differenceWith(data, watcher.posts, _.isEqual);
-          console.log(postDiff);
-          console.log(state);
-          watcher.posts = postDiff.flat();
-          console.log(state);
+          const postDiff = _.differenceWith(data.flat(), watcher.posts, _.isEqual);
+          watcher.posts.unshift(...postDiff);
           postsRender(state.feeds, watcher.posts);
           watcher.status.loadData = 'upload';
           updatePosts();
