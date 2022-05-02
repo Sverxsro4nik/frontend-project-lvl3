@@ -11,6 +11,8 @@ const routes = {
   getPathRss: (path) => `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(path)}`,
 };
 
+// http://lorem-rss.herokuapp.com/feed
+
 const app = () => {
   const defaultLanguage = 'ru';
   const i18nextInstance = i18next.createInstance();
