@@ -6,6 +6,7 @@ import validate from './validate.js';
 import resources from './locales/locales.js';
 import parser from './parser.js';
 import postsRender from './postsRender.js';
+import renderModal from './renderModal.js';
 
 const routes = {
   getPathRss: (path) => `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(path)}`,
@@ -27,15 +28,16 @@ const app = () => {
       },
       feeds: [],
       posts: [],
+      postForModal: {},
       status: {
         validation: 'invalid',
         loadData: 'loading',
       },
+      modalShow: 'hide',
     };
 
     const rssForm = document.querySelector('.rss-form');
     const postsContainer = document.querySelector('.posts');
-    console.log(postsContainer);
     const watcher = view(state, i18nextInstance);
     const updatePosts = () => {
       watcher.status.loadData = 'loading';
@@ -89,7 +91,14 @@ const app = () => {
     });
     postsContainer.addEventListener('click', (e) => {
       const elem = e.target;
-      console.log(elem);
+      const id = elem.dataset.postId;
+      const modal = document.getElementById('modal');
+      const [actualPost] = state.posts.filter((post) => post.postId === id);
+      watcher.postForModal = actualPost;
+      watcher.modalShow = 'show';
+      console.log(modal);
+      console.log(state);
+      renderModal(modal, actualPost);
     });
   });
 };
