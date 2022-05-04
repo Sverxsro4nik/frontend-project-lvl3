@@ -1,8 +1,9 @@
 import onChange from 'on-change';
+import renderModal from './renderModal.js';
 
 const view = (state, text) => onChange(state, (path, current) => {
   const feedback = document.querySelector('.feedback');
-  // const addButton = document.querySelector('[aria-label=add]');
+  const modal = document.getElementById('modal');
   console.log('path', path);
   // console.log('current', current);
   // console.log('prepend', prepend);
@@ -17,6 +18,12 @@ const view = (state, text) => onChange(state, (path, current) => {
     feedback.classList.add('text-danger');
     const textInFeed = current === 'invalid' ? 'Ссылка должна быть валидным URL' : 'RSS уже существует';
     feedback.textContent = textInFeed;
+  }
+
+  if (path === 'modalShow') {
+    if (current === 'show') {
+      renderModal(modal, state.postForModal);
+    }
   }
 });
 

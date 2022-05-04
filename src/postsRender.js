@@ -56,6 +56,7 @@ const createPostsField = (posts) => {
     postButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     postButton.setAttribute('data-post-id', postId);
     postButton.setAttribute('data-bs-toggle', 'modal');
+    postButton.setAttribute('data-bs-target', '#modal');
     postButton.textContent = 'Просмотр';
     item.append(link);
     item.append(postButton);
