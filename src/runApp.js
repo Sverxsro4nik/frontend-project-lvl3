@@ -5,7 +5,6 @@ import view from './view.js';
 import validate from './validate.js';
 import resources from './locales/locales.js';
 import parser from './parser.js';
-import postsRender from './postsRender.js';
 
 const routes = {
   getPathRss: (path) => `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(path)}`,
@@ -27,6 +26,7 @@ const app = () => {
       },
       feeds: [],
       posts: [],
+      readedPosts: [],
       postForModal: {},
       status: {
         validation: 'invalid',
@@ -47,7 +47,6 @@ const app = () => {
           .then(({ posts }) => posts))).then((data) => {
           const postDiff = _.differenceWith(data.flat(), watcher.posts, _.isEqual);
           watcher.posts.unshift(...postDiff);
-          postsRender(state.feeds, watcher.posts);
           watcher.status.loadData = 'upload';
           updatePosts();
         }).catch((err) => {
@@ -77,7 +76,6 @@ const app = () => {
             const { feed, posts } = data;
             watcher.feeds = [feed, ...state.feeds];
             watcher.posts = posts.concat(state.posts);
-            postsRender(state.feeds, state.posts);
             rssForm.reset();
             if (watcher.status.loadData === 'loading') {
               updatePosts();
@@ -91,6 +89,9 @@ const app = () => {
     postsContainer.addEventListener('click', (e) => {
       const elem = e.target;
       const id = elem.dataset.postId;
+      if (id && !watcher.readedPosts.includes(id)) {
+        watcher.readedPosts.push(id);
+      }
       const [actualPost] = state.posts.filter((post) => post.postId === id);
       watcher.postForModal = actualPost;
       watcher.modalShow = 'show';
