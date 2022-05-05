@@ -21,7 +21,7 @@ const app = () => {
     debug: false,
     resources,
   }).then(() => {
-    const state = {
+    const initialState = {
       rssForm: {
         urls: [],
       },
@@ -38,7 +38,7 @@ const app = () => {
 
     const rssForm = document.querySelector('.rss-form');
     const postsContainer = document.querySelector('.posts');
-    const watcher = view(state, i18nextInstance);
+    const watcher = view(initialState, i18nextInstance);
 
     const updatePosts = () => {
       watcher.status.loadData = 'loading';
@@ -77,8 +77,8 @@ const app = () => {
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
             const { feed, posts } = data;
-            watcher.feeds = [feed, ...state.feeds];
-            watcher.posts = posts.concat(state.posts);
+            watcher.feeds = [feed, ...watcher.feeds];
+            watcher.posts = posts.concat(watcher.posts);
             rssForm.reset();
             if (watcher.status.loadData === 'loading') {
               updatePosts();
@@ -96,7 +96,7 @@ const app = () => {
       if (id && !watcher.readedPosts.includes(id)) {
         watcher.readedPosts.push(id);
       }
-      const [actualPost] = state.posts.filter((post) => post.postId === id);
+      const [actualPost] = watcher.posts.filter((post) => post.postId === id);
       watcher.postForModal = actualPost;
       watcher.modalShow = 'show';
       watcher.modalShow = 'hidden';

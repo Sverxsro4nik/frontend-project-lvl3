@@ -8,5 +8,5 @@ lint:
 publish:
 				npm publish --dry-run
 
-push:
+push:		lint
 				git push origin main
