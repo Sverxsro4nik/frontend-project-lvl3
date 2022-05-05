@@ -8,6 +8,7 @@ const createFeedsField = (feeds) => {
 
   const cardTitle = document.createElement('h2');
   cardTitle.textContent = 'Фиды';
+  cardTitle.setAttribute('id', 'feedsTitle');
   cardTitle.classList.add('card-title', 'h4');
 
   cardBody.append(cardTitle);

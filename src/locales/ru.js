@@ -5,6 +5,14 @@ export default {
     placeholder: 'Ссылка RSS',
     example: 'Пример: https://ru.hexlet.io/lessons.rss',
     addButton: 'Добавить',
-
+    valid: 'RSS успешно загружен',
+    invalid: 'Ссылка должна быть валидным URL',
+    parseError: 'Ресурс не содержит валидный RSS',
+    duplication: 'RSS уже существует',
+    feeds: 'Фиды',
+    posts: 'Посты',
+    viewPost: 'Просмотр',
+    modalRead: 'Читать полностью',
+    modalClose: 'Закрыть',
   },
 };

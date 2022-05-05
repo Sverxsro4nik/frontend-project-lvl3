@@ -3,21 +3,46 @@ import renderModal from './renderModal.js';
 import createPostsField from './postsRender.js';
 import createFeedsField from './feedsRender.js';
 
-const view = (state) => onChange(state, (path, current) => {
+const view = (state, text) => onChange(state, (path, current) => {
+  const pageHeader = document.querySelector('h1');
+  const pageDescription = document.querySelector('.lead');
+  const rssInput = document.querySelector('#url-input');
+  const rssExample = document.querySelector('#rssExample');
+  const addButton = document.querySelector('[aria-label="add"]');
+  const feedsHeader = document.querySelector('#feedsTitle');
+  const postsHeader = document.querySelector('#postsHeader');
+  const viewButton = document.querySelector('[data-bs-toggle="modal"]');
+  const readButton = document.querySelector('#read');
+  const modalClose = document.querySelector('#modalClose');
   const feedback = document.querySelector('.feedback');
   const modal = document.getElementById('modal');
   console.log('path', path);
 
+  if (path === 'lng') {
+    text.changeLanguage(current).then((t) => {
+      pageHeader.textContent = t('h1');
+      pageDescription.textContent = t('content');
+      rssInput.setAttribute('placeholder', t('placeholder'));
+      rssExample.textContent = t('example');
+      addButton.textContent = t('addButton');
+      feedsHeader.textContent = t('feeds');
+      postsHeader.textContent = t('posts');
+      viewButton.textContent = t('view');
+      readButton.textContent = t('modalRead');
+      modalClose.textContent = t('modalClose');
+    });
+  }
+
   if (state.status.validation === 'valid') {
     feedback.classList.remove('text-danger');
     feedback.classList.add('text-success');
-    feedback.textContent = 'RSS успешно загружен';
+    feedback.textContent = text.t('valid');
     createFeedsField(state.feeds);
     createPostsField(state);
   } else {
     feedback.classList.remove('text-success');
     feedback.classList.add('text-danger');
-    const textInFeed = current === 'invalid' ? 'Ссылка должна быть валидным URL' : 'RSS уже существует';
+    const textInFeed = current === 'invalid' ? text.t('invalid') : text.t('duplication');
     feedback.textContent = textInFeed;
   }
 
