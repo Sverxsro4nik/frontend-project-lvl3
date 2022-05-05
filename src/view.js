@@ -7,6 +7,7 @@ const view = (state) => onChange(state, (path, current) => {
   const feedback = document.querySelector('.feedback');
   const modal = document.getElementById('modal');
   console.log('path', path);
+
   if (state.status.validation === 'valid') {
     feedback.classList.remove('text-danger');
     feedback.classList.add('text-success');
@@ -26,6 +27,7 @@ const view = (state) => onChange(state, (path, current) => {
       renderModal(modal, state.postForModal);
     }
   }
+
   if (path === 'status.loadData') {
     createPostsField(state);
   }

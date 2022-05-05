@@ -15,6 +15,7 @@ const routes = {
 const app = () => {
   const defaultLanguage = 'ru';
   const i18nextInstance = i18next.createInstance();
+
   i18nextInstance.init({
     lng: defaultLanguage,
     debug: false,
@@ -38,6 +39,7 @@ const app = () => {
     const rssForm = document.querySelector('.rss-form');
     const postsContainer = document.querySelector('.posts');
     const watcher = view(state, i18nextInstance);
+
     const updatePosts = () => {
       watcher.status.loadData = 'loading';
       setTimeout(() => {
@@ -55,6 +57,7 @@ const app = () => {
         });
       }, 5000);
     };
+
     rssForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const formValue = new FormData(e.target);
@@ -86,6 +89,7 @@ const app = () => {
         }
       });
     });
+
     postsContainer.addEventListener('click', (e) => {
       const elem = e.target;
       const id = elem.dataset.postId;
