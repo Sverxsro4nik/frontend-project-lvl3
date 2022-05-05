@@ -30,6 +30,7 @@ const app = () => {
       readedPosts: [],
       postForModal: {},
       status: {
+        loadProcess: 'start',
         validation: 'invalid',
         loadData: 'loading',
       },
@@ -73,18 +74,26 @@ const app = () => {
         watcher.status.validation = 'invalid';
       }).then(() => {
         if (watcher.status.validation === 'valid') {
+          watcher.status.loadProcess = 'in-process';
           watcher.status.loadData = 'loading';
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
             const { feed, posts } = data;
             watcher.feeds = [feed, ...watcher.feeds];
             watcher.posts = posts.concat(watcher.posts);
+            watcher.status.loadData = 'success';
             rssForm.reset();
             if (watcher.status.loadData === 'loading') {
               updatePosts();
             }
           }).catch((error) => {
-            console.log(error);
+            const { message } = error;
+            if (message === 'Network Error') {
+              watcher.status.loadProcess = 'failed';
+            }
+          }).then(() => {
+            watcher.status.loadData = 'start';
+            watcher.status.validation = 'valid';
           });
         }
       });
