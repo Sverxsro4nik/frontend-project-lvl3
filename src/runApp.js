@@ -85,7 +85,6 @@ const app = () => {
               watcher.feeds = [feed, ...watcher.feeds];
               watcher.posts = posts.concat(watcher.posts);
               watcher.status.loadData = 'success';
-              rssForm.reset();
               if (watcher.status.loadData === 'loading') {
                 updatePosts();
               }

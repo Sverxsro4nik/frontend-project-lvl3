@@ -16,6 +16,7 @@ const view = (state, text) => onChange(state, (path, current) => {
   const modalClose = document.querySelector('#modalClose');
   const feedback = document.querySelector('.feedback');
   const modal = document.getElementById('modal');
+  const rssForm = document.querySelector('.rss-form');
   console.log('path', path);
 
   if (path === 'lng') {
@@ -39,6 +40,8 @@ const view = (state, text) => onChange(state, (path, current) => {
     feedback.textContent = text.t('valid');
     createFeedsField(state.feeds);
     createPostsField(state);
+    rssForm.reset();
+    rssInput.focus();
   } else {
     feedback.classList.remove('text-success');
     feedback.classList.add('text-danger');
