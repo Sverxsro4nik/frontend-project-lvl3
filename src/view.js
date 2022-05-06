@@ -4,7 +4,7 @@ import createPostsField from './postsRender.js';
 import createFeedsField from './feedsRender.js';
 
 const view = (state, text) => onChange(state, (path, current) => {
-  const pageHeader = document.querySelector('h1');
+  const pageHeader = document.querySelector('#projectHeader');
   const pageDescription = document.querySelector('.lead');
   const rssInput = document.querySelector('#url-input');
   const rssExample = document.querySelector('#rssExample');

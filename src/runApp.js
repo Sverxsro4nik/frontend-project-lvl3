@@ -78,13 +78,17 @@ const app = () => {
           watcher.status.loadData = 'loading';
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
-            const { feed, posts } = data;
-            watcher.feeds = [feed, ...watcher.feeds];
-            watcher.posts = posts.concat(watcher.posts);
-            watcher.status.loadData = 'success';
-            rssForm.reset();
-            if (watcher.status.loadData === 'loading') {
-              updatePosts();
+            if (!data) {
+              throw new Error('Error parsing');
+            } else {
+              const { feed, posts } = data;
+              watcher.feeds = [feed, ...watcher.feeds];
+              watcher.posts = posts.concat(watcher.posts);
+              watcher.status.loadData = 'success';
+              rssForm.reset();
+              if (watcher.status.loadData === 'loading') {
+                updatePosts();
+              }
             }
           }).catch((error) => {
             const { message } = error;
