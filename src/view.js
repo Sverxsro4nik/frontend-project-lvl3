@@ -8,7 +8,6 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     pageHeader, pageDescription, rssInput, rssExample, addButton, rssForm,
     feedsHeader, postsHeader, viewButton, readButton, modalClose, feedback, modal,
   } = elements;
-  console.log('path', path);
 
   if (path === 'lng') {
     text.changeLanguage(current).then((t) => {
