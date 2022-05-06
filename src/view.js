@@ -6,14 +6,8 @@ import createFeedsField from './feedsRender.js';
 const view = (state, elements, text) => onChange(state, (path, current) => {
   const {
     pageHeader, pageDescription, rssInput, rssExample, addButton, rssForm,
+    feedsHeader, postsHeader, viewButton, readButton, modalClose, feedback, modal,
   } = elements;
-  const feedsHeader = document.querySelector('#feedsTitle');
-  const postsHeader = document.querySelector('#postsHeader');
-  const viewButton = document.querySelector('[data-bs-toggle="modal"]');
-  const readButton = document.querySelector('#read');
-  const modalClose = document.querySelector('#modalClose');
-  const feedback = document.querySelector('.feedback');
-  const modal = document.getElementById('modal');
   console.log('path', path);
 
   if (path === 'lng') {

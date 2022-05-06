@@ -45,6 +45,13 @@ const app = () => {
       rssInput: document.querySelector('#url-input'),
       rssExample: document.querySelector('#rssExample'),
       addButton: document.querySelector('[aria-label="add"]'),
+      feedsHeader: document.querySelector('#feedsTitle'),
+      postsHeader: document.querySelector('#postsHeader'),
+      viewButton: document.querySelector('[data-bs-toggle="modal"]'),
+      readButton: document.querySelector('#read'),
+      modalClose: document.querySelector('#modalClose'),
+      feedback: document.querySelector('.feedback'),
+      modal: document.getElementById('modal'),
     };
 
     const watcher = view(initialState, elements, i18nextInstance);
