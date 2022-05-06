@@ -37,9 +37,17 @@ const app = () => {
       modalShow: 'hidden',
     };
 
-    const rssForm = document.querySelector('.rss-form');
-    const postsContainer = document.querySelector('.posts');
-    const watcher = view(initialState, i18nextInstance);
+    const elements = {
+      rssForm: document.querySelector('.rss-form'),
+      postsContainer: document.querySelector('.posts'),
+      pageHeader: document.querySelector('#projectHeader'),
+      pageDescription: document.querySelector('.lead'),
+      rssInput: document.querySelector('#url-input'),
+      rssExample: document.querySelector('#rssExample'),
+      addButton: document.querySelector('[aria-label="add"]'),
+    };
+
+    const watcher = view(initialState, elements, i18nextInstance);
 
     const updatePosts = () => {
       watcher.status.loadData = 'loading';
@@ -59,7 +67,7 @@ const app = () => {
       }, 5000);
     };
 
-    rssForm.addEventListener('submit', (e) => {
+    elements.rssForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const formValue = new FormData(e.target);
       const value = formValue.get('url');
@@ -84,7 +92,7 @@ const app = () => {
               const { feed, posts } = data;
               watcher.feeds = [feed, ...watcher.feeds];
               watcher.posts = posts.concat(watcher.posts);
-              watcher.status.loadData = 'success';
+              watcher.status.loadProcess = 'success';
               if (watcher.status.loadData === 'loading') {
                 updatePosts();
               }
@@ -102,7 +110,7 @@ const app = () => {
       });
     });
 
-    postsContainer.addEventListener('click', (e) => {
+    elements.postsContainer.addEventListener('click', (e) => {
       const elem = e.target;
       const id = elem.dataset.postId;
       if (id && !watcher.readedPosts.includes(id)) {

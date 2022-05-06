@@ -3,12 +3,10 @@ import renderModal from './renderModal.js';
 import createPostsField from './postsRender.js';
 import createFeedsField from './feedsRender.js';
 
-const view = (state, text) => onChange(state, (path, current) => {
-  const pageHeader = document.querySelector('#projectHeader');
-  const pageDescription = document.querySelector('.lead');
-  const rssInput = document.querySelector('#url-input');
-  const rssExample = document.querySelector('#rssExample');
-  const addButton = document.querySelector('[aria-label="add"]');
+const view = (state, elements, text) => onChange(state, (path, current) => {
+  const {
+    pageHeader, pageDescription, rssInput, rssExample, addButton, rssForm,
+  } = elements;
   const feedsHeader = document.querySelector('#feedsTitle');
   const postsHeader = document.querySelector('#postsHeader');
   const viewButton = document.querySelector('[data-bs-toggle="modal"]');
@@ -16,7 +14,6 @@ const view = (state, text) => onChange(state, (path, current) => {
   const modalClose = document.querySelector('#modalClose');
   const feedback = document.querySelector('.feedback');
   const modal = document.getElementById('modal');
-  const rssForm = document.querySelector('.rss-form');
   console.log('path', path);
 
   if (path === 'lng') {
@@ -52,10 +49,15 @@ const view = (state, text) => onChange(state, (path, current) => {
   if (path === 'status.loadProcess') {
     switch (current) {
       case 'in-process':
+        rssExample.textContent = text.t('');
         rssInput.setAttribute('readonly', true);
         addButton.setAttribute('disabled', true);
         break;
       case 'start':
+        rssInput.removeAttribute('readonly');
+        addButton.removeAttribute('disabled');
+        break;
+      case 'success':
         rssInput.removeAttribute('readonly');
         addButton.removeAttribute('disabled');
         break;
