@@ -40,6 +40,7 @@ const app = () => {
     const elements = {
       rssForm: document.querySelector('.rss-form'),
       postsContainer: document.querySelector('.posts'),
+      feedsContainer: document.querySelector('.feeds'),
       pageHeader: document.querySelector('#projectHeader'),
       pageDescription: document.querySelector('.lead'),
       rssInput: document.querySelector('#url-input'),

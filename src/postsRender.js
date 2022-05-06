@@ -1,9 +1,7 @@
 // import _ from 'lodash';
 
-const createPostsField = (state) => {
+const createPostsField = (container, state) => {
   const { posts, readedPosts } = state;
-
-  const postsDiv = document.querySelector('.posts');
 
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
@@ -53,7 +51,7 @@ const createPostsField = (state) => {
   });
 
   card.append(postsList);
-  postsDiv.replaceChildren(card);
+  container.replaceChildren(card);
 };
 
 export default createPostsField;

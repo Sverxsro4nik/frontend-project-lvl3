@@ -1,5 +1,5 @@
-const createFeedsField = (feeds) => {
-  const feedsDiv = document.querySelector('.feeds');
+const createFeedsField = (container, state) => {
+  const { feeds } = state;
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
 
@@ -37,7 +37,7 @@ const createFeedsField = (feeds) => {
   });
 
   card.append(feedsList);
-  feedsDiv.replaceChildren(card, card);
+  container.replaceChildren(card, card);
 };
 
 export default createFeedsField;

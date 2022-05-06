@@ -7,6 +7,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
   const {
     pageHeader, pageDescription, rssInput, rssExample, addButton, rssForm,
     feedsHeader, postsHeader, viewButton, readButton, modalClose, feedback, modal,
+    postContainer, feedsContainer,
   } = elements;
 
   if (path === 'lng') {
@@ -28,8 +29,8 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     feedback.classList.remove('text-danger');
     feedback.classList.add('text-success');
     feedback.textContent = text.t('valid');
-    createFeedsField(state.feeds);
-    createPostsField(state);
+    createFeedsField(feedsContainer, state);
+    createPostsField(postContainer, state);
     rssForm.reset();
     rssInput.focus();
   } else {
