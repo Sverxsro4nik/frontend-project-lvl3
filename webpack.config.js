@@ -1,8 +1,11 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+import path, { dirname } from 'path';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-module.exports = {
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = dirname('public');
+
+export default {
   mode: 'development',
   entry: './src/index.js',
   output: {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "RSS parser",
   "type": "module",
-  "main": "src/index.js",
+  "main": "src/runApp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
