@@ -38,7 +38,7 @@ const app = () => {
     };
 
     const elements = {
-      rssForm: document.querySelector('.rss-form'),
+      form: document.querySelector('.rss-form'),
       postsContainer: document.querySelector('.posts'),
       feedsContainer: document.querySelector('.feeds'),
       pageHeader: document.querySelector('#projectHeader'),
@@ -56,7 +56,6 @@ const app = () => {
     };
 
     const watcher = view(initialState, elements, i18nextInstance);
-
     const updatePosts = () => {
       watcher.status.loadData = 'loading';
       setTimeout(() => {
@@ -75,7 +74,7 @@ const app = () => {
       }, 5000);
     };
 
-    elements.rssForm.addEventListener('submit', (e) => {
+    elements.form.addEventListener('submit', (e) => {
       e.preventDefault();
       const formValue = new FormData(e.target);
       const value = formValue.get('url');
@@ -86,7 +85,8 @@ const app = () => {
         } else {
           watcher.status.validation = 'present';
         }
-      }).catch(() => {
+      }).catch((er) => {
+        console.log(er.message);
         watcher.status.validation = 'invalid';
       }).then(() => {
         if (watcher.status.validation === 'valid') {

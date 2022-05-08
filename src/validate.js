@@ -3,7 +3,7 @@ import * as yup from 'yup';
 const validate = (data, text) => {
   yup.setLocale({
     string: {
-      url: () => text.t('valid.validError'),
+      url: () => text.t('parseError'),
     },
   });
   const schema = yup.object().shape({

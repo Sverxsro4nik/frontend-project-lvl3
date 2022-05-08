@@ -2,7 +2,6 @@
 
 const createPostsField = (container, state) => {
   const { posts, readedPosts } = state;
-
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
 
@@ -19,7 +18,6 @@ const createPostsField = (container, state) => {
 
   const postsList = document.createElement('ul');
   postsList.classList.add('list-group', 'border-0', 'rounded-0');
-
   posts.forEach((post) => {
     const { postTitle, postLink, postId } = post;
 

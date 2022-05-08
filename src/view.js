@@ -5,11 +5,14 @@ import createFeedsField from './feedsRender.js';
 
 const view = (state, elements, text) => onChange(state, (path, current) => {
   const {
-    pageHeader, pageDescription, rssInput, rssExample, addButton, rssForm,
+    pageHeader, pageDescription, rssInput, rssExample, addButton, form,
     feedsHeader, postsHeader, viewButton, readButton, modalClose, feedback, modal,
-    postContainer, feedsContainer,
+    postsContainer, feedsContainer,
   } = elements;
-
+  // console.log('path', path);
+  // console.log('state', state);
+  // console.log('current', current);
+  // console.log('elements', elements);
   if (path === 'lng') {
     text.changeLanguage(current).then((t) => {
       pageHeader.textContent = t('h1');
@@ -30,8 +33,8 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     feedback.classList.add('text-success');
     feedback.textContent = text.t('valid');
     createFeedsField(feedsContainer, state);
-    createPostsField(postContainer, state);
-    rssForm.reset();
+    createPostsField(postsContainer, state);
+    form.reset();
     rssInput.focus();
   } else {
     feedback.classList.remove('text-success');
@@ -72,7 +75,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
   }
 
   if (path === 'status.loadData') {
-    createPostsField(state);
+    createPostsField(postsContainer, state);
   }
 });
 
