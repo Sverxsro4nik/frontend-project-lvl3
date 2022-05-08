@@ -10,3 +10,6 @@ publish:
 
 push:		lint
 				git push origin main
+	
+start:
+				npm run serve
