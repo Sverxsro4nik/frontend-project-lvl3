@@ -31,7 +31,7 @@ const app = () => {
       postForModal: {},
       status: {
         loadProcess: 'start',
-        validation: 'invalid',
+        validation: '',
         loadData: 'loading',
       },
       modalShow: 'hidden',
@@ -85,8 +85,7 @@ const app = () => {
         } else {
           watcher.status.validation = 'present';
         }
-      }).catch((er) => {
-        console.log(er.message);
+      }).catch(() => {
         watcher.status.validation = 'invalid';
       }).then(() => {
         if (watcher.status.validation === 'valid') {
