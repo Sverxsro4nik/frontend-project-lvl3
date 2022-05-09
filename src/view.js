@@ -9,8 +9,8 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     feedsHeader, postsHeader, viewButton, readButton, modalClose, feedback, modal,
     postsContainer, feedsContainer,
   } = elements;
-  // console.log('path', path);
-  // console.log('state', state);
+  console.log('path', path);
+  console.log('state', state);
   // console.log('current', current);
   // console.log('elements', elements);
   if (path === 'lng') {
@@ -28,19 +28,32 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     });
   }
 
-  if (state.status.validation === 'valid') {
-    feedback.classList.remove('text-danger');
-    feedback.classList.add('text-success');
-    feedback.textContent = text.t('valid');
-    createFeedsField(feedsContainer, state);
-    createPostsField(postsContainer, state);
-    form.reset();
-    rssInput.focus();
-  } else {
-    feedback.classList.remove('text-success');
-    feedback.classList.add('text-danger');
-    const textInFeed = current === 'invalid' ? text.t('invalid') : text.t('duplication');
-    feedback.textContent = textInFeed;
+  if (path === 'status.validation') {
+    if (current === 'invalid') {
+      feedback.classList.remove('text-success');
+      feedback.classList.add('text-danger');
+      feedback.textContent = text.t('invalid');
+    }
+    if (current === 'present') {
+      feedback.classList.remove('text-success');
+      feedback.classList.add('text-danger');
+      feedback.textContent = text.t('duplication');
+    }
+  }
+
+  if (path === 'status.parseError') {
+    console.log('current in parseError', current);
+    if (!current && state.status.loadProcess === 'success') {
+      feedback.classList.remove('text-danger');
+      feedback.classList.add('text-success');
+      feedback.textContent = text.t('valid');
+      createFeedsField(feedsContainer, state);
+      createPostsField(postsContainer, state);
+      form.reset();
+      rssInput.focus();
+    } else {
+      feedback.textContent = text.t('parsingError');
+    }
   }
 
   if (path === 'status.loadProcess') {

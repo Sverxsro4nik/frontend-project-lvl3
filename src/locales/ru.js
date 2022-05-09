@@ -7,7 +7,7 @@ export default {
     addButton: 'Добавить',
     valid: 'RSS успешно загружен',
     invalid: 'Ссылка должна быть валидным URL',
-    parseError: 'Ресурс не содержит валидный RSS',
+    parsingError: 'Ресурс не содержит валидный RSS',
     duplication: 'RSS уже существует',
     feeds: 'Фиды',
     posts: 'Посты',

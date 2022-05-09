@@ -32,6 +32,7 @@ const app = () => {
       status: {
         loadProcess: 'start',
         validation: '',
+        parseError: null,
         loadData: 'loading',
       },
       modalShow: 'hidden',
@@ -94,12 +95,13 @@ const app = () => {
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
             if (!data) {
-              throw new Error('Error parsing');
+              throw new Error('parsingError');
             } else {
               const { feed, posts } = data;
               watcher.feeds = [feed, ...watcher.feeds];
               watcher.posts = posts.concat(watcher.posts);
               watcher.status.loadProcess = 'success';
+              watcher.status.parseError = false;
               if (watcher.status.loadData === 'loading') {
                 updatePosts();
               }
@@ -109,7 +111,11 @@ const app = () => {
             if (message === 'Network Error') {
               watcher.status.loadProcess = 'failed';
             }
+            if (message === 'parsingError') {
+              watcher.status.parseError = true;
+            }
           }).then(() => {
+            watcher.status.parseError = null;
             watcher.status.loadData = 'start';
             watcher.status.validation = 'valid';
           });
