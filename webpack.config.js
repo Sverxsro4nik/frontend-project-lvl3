@@ -16,7 +16,7 @@ export default {
   devServer: {
     liveReload: true,
     compress: false,
-    port: 9000,
+    port: 8080,
     open: true,
   },
   module: {
