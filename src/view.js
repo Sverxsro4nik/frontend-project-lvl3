@@ -76,6 +76,9 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
       case 'failed':
         rssInput.removeAttribute('readonly');
         addButton.removeAttribute('disabled');
+        feedback.textContent = text.t('networkError');
+        feedback.classList.remove('text-success');
+        feedback.classList.add('text-danger');
         break;
       default:
         throw new Error(`Unknow status ${current}`);

@@ -14,5 +14,6 @@ export default {
     viewPost: 'Просмотр',
     modalRead: 'Читать полностью',
     modalClose: 'Закрыть',
+    networkError: 'Ошибка сети',
   },
 };
