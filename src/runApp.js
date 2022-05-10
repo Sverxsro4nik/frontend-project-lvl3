@@ -112,6 +112,7 @@ const app = () => {
               watcher.status.loadProcess = 'failed';
             }
             if (message === 'parsingError') {
+              watcher.rssForm.urls.shift();
               watcher.status.parseError = true;
             }
           }).then(() => {
