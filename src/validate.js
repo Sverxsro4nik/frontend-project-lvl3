@@ -14,4 +14,5 @@ const validate = (data, text) => {
 
   return schema.validate({ url: data }, { abortEarly: false });
 };
+
 export default validate;

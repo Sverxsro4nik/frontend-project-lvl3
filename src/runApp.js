@@ -68,8 +68,8 @@ const app = () => {
           watcher.posts.unshift(...postDiff);
           watcher.status.loadData = 'upload';
           updatePosts();
-        }).catch((err) => {
-          console.log(err);
+        }).catch(() => {
+          watcher.status.loadData = 'loading';
           updatePosts();
         });
       }, 5000);
@@ -116,8 +116,9 @@ const app = () => {
             }
           }).then(() => {
             watcher.status.parseError = null;
-            watcher.status.loadData = 'start';
-            watcher.status.validation = 'valid';
+            watcher.status.loadProcess = 'start';
+            watcher.status.validation = '';
+            watcher.status.loadData = 'loading';
           });
         }
       });

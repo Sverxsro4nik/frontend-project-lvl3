@@ -2,6 +2,11 @@ const parser = (data) => {
   const parserData = new DOMParser();
   const format = 'application/xml';
   const parcingData = parserData.parseFromString(data, format);
+  const parseError = parcingData.querySelector('parsererror');
+
+  if (parseError) {
+    return null;
+  }
 
   const feedId = parcingData.querySelector('link').textContent.trim();
   const feedTitle = parcingData.querySelector('title').textContent.trim();
