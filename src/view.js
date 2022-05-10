@@ -9,8 +9,8 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     feedsHeader, postsHeader, viewButton, readButton, modalClose, feedback, modal,
     postsContainer, feedsContainer,
   } = elements;
-  console.log('path', path);
-  console.log('state', state);
+  // console.log('path', path);
+  // console.log('state', state);
   // console.log('current', current);
   // console.log('elements', elements);
   if (path === 'lng') {
@@ -42,7 +42,6 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
   }
 
   if (path === 'status.parseError') {
-    console.log('current in parseError', current);
     if (!current && state.status.loadProcess === 'success') {
       feedback.classList.remove('text-danger');
       feedback.classList.add('text-success');
@@ -87,7 +86,6 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
 
   if (path === 'modalShow') {
     if (current === 'show') {
-      console.log('work');
       renderModal(modal, state.postForModal);
     }
   }
