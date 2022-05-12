@@ -24,7 +24,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     });
   }
 
-  if (path === 'status.validation') {
+  if (path === 'urlValidation') {
     if (current === 'invalid') {
       feedback.classList.remove('text-success');
       feedback.classList.add('text-danger');
@@ -37,14 +37,13 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     }
   }
 
-  if (path === 'status.parseError') {
-    if (!current && state.status.loadProcess === 'success') {
+  if (path === 'parsingError') {
+    if (!current && state.loadProcess === 'success') {
       feedback.classList.remove('text-danger');
       feedback.classList.add('text-success');
       feedback.textContent = text.t('valid');
       createFeedsField(feedsContainer, state);
       createPostsField(postsContainer, state);
-      console.log(state);
       form.reset();
       rssInput.focus();
     } else {
@@ -54,7 +53,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     }
   }
 
-  if (path === 'status.loadProcess') {
+  if (path === 'loadProcess') {
     switch (current) {
       case 'in-process':
         rssExample.textContent = text.t('');
@@ -87,7 +86,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     }
   }
 
-  if (path === 'status.loadData') {
+  if (path === 'loadingData') {
     createPostsField(postsContainer, state);
   }
 });

@@ -29,12 +29,10 @@ const app = () => {
       posts: [],
       readedPosts: [],
       postForModal: {},
-      status: {
-        loadProcess: 'start',
-        validation: '',
-        parseError: null,
-        loadData: 'loading',
-      },
+      urlValidation: '',
+      loadProcess: 'start',
+      parsingError: null,
+      loadingData: 'loading',
       modalShow: 'hidden',
     };
 
@@ -58,7 +56,7 @@ const app = () => {
 
     const watcher = view(initialState, elements, i18nextInstance);
     const updatePosts = () => {
-      watcher.status.loadData = 'loading';
+      watcher.loadData = 'loading';
       setTimeout(() => {
         const urlLinks = watcher.rssForm.urls;
         Promise.all(urlLinks.map((link) => axios.get(routes.getPathRss(link))
@@ -66,7 +64,7 @@ const app = () => {
           .then(({ posts }) => posts))).then((data) => {
           const postDiff = _.differenceWith(data.flat(), watcher.posts, _.isEqual);
           watcher.posts.unshift(...postDiff);
-          watcher.status.loadData = 'upload';
+          watcher.loadData = 'upload';
         }).catch(() => {
         }).finally(() => updatePosts());
       }, 5000);
@@ -79,16 +77,16 @@ const app = () => {
       validate(value, i18nextInstance).then(() => {
         if (!watcher.rssForm.urls.includes(value)) {
           watcher.rssForm.urls.unshift(value);
-          watcher.status.validation = 'valid';
+          watcher.urlValidation = 'valid';
         } else {
-          watcher.status.validation = 'present';
+          watcher.urlValidation = 'present';
         }
       }).catch(() => {
-        watcher.status.validation = 'invalid';
+        watcher.urlValidation = 'invalid';
       }).then(() => {
-        if (watcher.status.validation === 'valid') {
-          watcher.status.loadProcess = 'in-process';
-          watcher.status.loadData = 'loading';
+        if (watcher.urlValidation === 'valid') {
+          watcher.loadProcess = 'in-process';
+          watcher.loadingData = 'loading';
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
             if (!data) {
@@ -97,26 +95,26 @@ const app = () => {
               const { feed, posts } = data;
               watcher.feeds = [feed, ...watcher.feeds];
               watcher.posts = posts.concat(watcher.posts);
-              watcher.status.loadProcess = 'success';
-              watcher.status.parseError = false;
-              if (watcher.status.loadData === 'loading') {
+              watcher.loadProcess = 'success';
+              watcher.parsingError = false;
+              if (watcher.status.loadingData === 'loading') {
                 updatePosts();
               }
             }
           }).catch((error) => {
             const { message } = error;
             if (message === 'Network Error') {
-              watcher.status.loadProcess = 'failed';
+              watcher.loadProcess = 'failed';
             }
             if (message === 'parsingError') {
               watcher.rssForm.urls.shift();
-              watcher.status.parseError = true;
+              watcher.parseingError = true;
             }
           }).then(() => {
-            watcher.status.parseError = null;
-            watcher.status.loadProcess = 'start';
-            watcher.status.validation = '';
-            watcher.status.loadData = 'loading';
+            watcher.parsingError = null;
+            watcher.loadProcess = 'start';
+            watcher.urlValidation = '';
+            watcher.loadingData = 'loading';
           });
         }
       });
