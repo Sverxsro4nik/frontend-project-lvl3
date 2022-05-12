@@ -67,11 +67,8 @@ const app = () => {
           const postDiff = _.differenceWith(data.flat(), watcher.posts, _.isEqual);
           watcher.posts.unshift(...postDiff);
           watcher.status.loadData = 'upload';
-          updatePosts();
         }).catch(() => {
-          watcher.status.loadData = 'loading';
-          updatePosts();
-        });
+        }).finally(() => updatePosts());
       }, 5000);
     };
 

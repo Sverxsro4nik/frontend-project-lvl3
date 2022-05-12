@@ -9,10 +9,6 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     feedsHeader, postsHeader, viewButton, readButton, modalClose, feedback, modal,
     postsContainer, feedsContainer,
   } = elements;
-  // console.log('path', path);
-  // console.log('state', state);
-  // console.log('current', current);
-  // console.log('elements', elements);
   if (path === 'lng') {
     text.changeLanguage(current).then((t) => {
       pageHeader.textContent = t('h1');
@@ -48,6 +44,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
       feedback.textContent = text.t('valid');
       createFeedsField(feedsContainer, state);
       createPostsField(postsContainer, state);
+      console.log(state);
       form.reset();
       rssInput.focus();
     } else {
