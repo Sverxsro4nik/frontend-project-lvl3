@@ -1,7 +1,8 @@
 import onChange from 'on-change';
-import renderModal from './renderModal.js';
-import createPostsField from './postsRender.js';
-import createFeedsField from './feedsRender.js';
+import renderModal from './render/renderModal.js';
+import postsRender from './render/postsRender.js';
+import feedsRender from './render/feedsRender.js';
+import renderFeedback from './render/renderFeedback.js';
 
 const view = (state, elements, text) => onChange(state, (path, current) => {
   const {
@@ -26,30 +27,22 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
 
   if (path === 'urlValidation') {
     if (current === 'invalid') {
-      feedback.classList.remove('text-success');
-      feedback.classList.add('text-danger');
-      feedback.textContent = text.t('invalid');
+      renderFeedback(feedback, 'text-danger', 'text-success', text.t('invalid'));
     }
     if (current === 'present') {
-      feedback.classList.remove('text-success');
-      feedback.classList.add('text-danger');
-      feedback.textContent = text.t('duplication');
+      renderFeedback(feedback, 'text-danger', 'text-success', text.t('duplication'));
     }
   }
 
   if (path === 'parsingError') {
     if (!current && state.downloadStatus === 'success') {
-      feedback.classList.remove('text-danger');
-      feedback.classList.add('text-success');
-      feedback.textContent = text.t('valid');
-      createFeedsField(feedsContainer, state);
-      createPostsField(postsContainer, state);
+      renderFeedback(feedback, 'text-success', 'text-danger', text.t('valid'));
+      feedsRender(feedsContainer, state);
+      postsRender(postsContainer, state);
       form.reset();
       rssInput.focus();
     } else {
-      feedback.classList.remove('text-success');
-      feedback.classList.add('text-danger');
-      feedback.textContent = text.t('parsingError');
+      renderFeedback(feedback, 'text-danger', 'text-success', text.t('parsingError'));
     }
   }
 
@@ -71,9 +64,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
       case 'failed':
         rssInput.removeAttribute('readonly');
         addButton.removeAttribute('disabled');
-        feedback.textContent = text.t('networkError');
-        feedback.classList.remove('text-success');
-        feedback.classList.add('text-danger');
+        renderFeedback(feedback, 'text-danger', 'text-success', text.t('networkError'));
         break;
       default:
         throw new Error(`Unknow status ${current}`);
@@ -87,7 +78,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
   }
 
   if (path === 'loadingData') {
-    createPostsField(postsContainer, state);
+    postsRender(postsContainer, state);
   }
 });
 

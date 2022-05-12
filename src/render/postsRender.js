@@ -1,6 +1,4 @@
-// import _ from 'lodash';
-
-const createPostsField = (container, state) => {
+const postsRender = (container, state) => {
   const { posts, readedPosts } = state;
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
@@ -52,4 +50,4 @@ const createPostsField = (container, state) => {
   container.replaceChildren(card);
 };
 
-export default createPostsField;
+export default postsRender;

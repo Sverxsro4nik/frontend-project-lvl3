@@ -127,7 +127,6 @@ const app = () => {
         watcher.readedPosts.push(id);
       }
       const actualPost = watcher.posts.find((post) => post.postId === id);
-      console.log(actualPost);
       watcher.postForModal = actualPost;
       watcher.modalShow = 'show';
     });

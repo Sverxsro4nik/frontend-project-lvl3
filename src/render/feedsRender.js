@@ -1,4 +1,4 @@
-const createFeedsField = (container, state) => {
+const feedsRender = (container, state) => {
   const { feeds } = state;
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
@@ -40,4 +40,4 @@ const createFeedsField = (container, state) => {
   container.replaceChildren(card, card);
 };
 
-export default createFeedsField;
+export default feedsRender;
