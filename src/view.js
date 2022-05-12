@@ -38,7 +38,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
   }
 
   if (path === 'parsingError') {
-    if (!current && state.loadProcess === 'success') {
+    if (!current && state.downloadStatus === 'success') {
       feedback.classList.remove('text-danger');
       feedback.classList.add('text-success');
       feedback.textContent = text.t('valid');
@@ -53,7 +53,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
     }
   }
 
-  if (path === 'loadProcess') {
+  if (path === 'downloadStatus') {
     switch (current) {
       case 'in-process':
         rssExample.textContent = text.t('');

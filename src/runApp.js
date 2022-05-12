@@ -30,7 +30,7 @@ const app = () => {
       readedPosts: [],
       postForModal: {},
       urlValidation: '',
-      loadProcess: 'start',
+      downloadStatus: 'start',
       parsingError: null,
       loadingData: 'loading',
       modalShow: 'hidden',
@@ -56,7 +56,7 @@ const app = () => {
 
     const watcher = view(initialState, elements, i18nextInstance);
     const updatePosts = () => {
-      watcher.loadData = 'loading';
+      watcher.loadingData = 'loading';
       setTimeout(() => {
         const urlLinks = watcher.rssForm.urls;
         Promise.all(urlLinks.map((link) => axios.get(routes.getPathRss(link))
@@ -64,7 +64,7 @@ const app = () => {
           .then(({ posts }) => posts))).then((data) => {
           const postDiff = _.differenceWith(data.flat(), watcher.posts, _.isEqual);
           watcher.posts.unshift(...postDiff);
-          watcher.loadData = 'upload';
+          watcher.loadingData = 'upload';
         }).catch(() => {
         }).finally(() => updatePosts());
       }, 5000);
@@ -85,7 +85,7 @@ const app = () => {
         watcher.urlValidation = 'invalid';
       }).then(() => {
         if (watcher.urlValidation === 'valid') {
-          watcher.loadProcess = 'in-process';
+          watcher.downloadStatus = 'in-process';
           watcher.loadingData = 'loading';
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
@@ -95,7 +95,7 @@ const app = () => {
               const { feed, posts } = data;
               watcher.feeds = [feed, ...watcher.feeds];
               watcher.posts = posts.concat(watcher.posts);
-              watcher.loadProcess = 'success';
+              watcher.downloadStatus = 'success';
               watcher.parsingError = false;
               if (watcher.status.loadingData === 'loading') {
                 updatePosts();
@@ -104,7 +104,7 @@ const app = () => {
           }).catch((error) => {
             const { message } = error;
             if (message === 'Network Error') {
-              watcher.loadProcess = 'failed';
+              watcher.downloadStatus = 'failed';
             }
             if (message === 'parsingError') {
               watcher.rssForm.urls.shift();
@@ -112,7 +112,7 @@ const app = () => {
             }
           }).then(() => {
             watcher.parsingError = null;
-            watcher.loadProcess = 'start';
+            watcher.downloadStatus = 'start';
             watcher.urlValidation = '';
             watcher.loadingData = 'loading';
           });
