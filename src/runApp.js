@@ -126,10 +126,10 @@ const app = () => {
       if (id && !watcher.readedPosts.includes(id)) {
         watcher.readedPosts.push(id);
       }
-      const [actualPost] = watcher.posts.filter((post) => post.postId === id);
+      const actualPost = watcher.posts.find((post) => post.postId === id);
+      console.log(actualPost);
       watcher.postForModal = actualPost;
       watcher.modalShow = 'show';
-      watcher.modalShow = 'hidden';
     });
   });
 };
