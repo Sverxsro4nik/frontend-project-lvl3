@@ -55,6 +55,7 @@ const app = () => {
     };
 
     const watcher = view(initialState, elements, i18nextInstance);
+
     const updatePosts = () => {
       watcher.loadingData = 'loading';
       setTimeout(() => {
@@ -70,7 +71,7 @@ const app = () => {
       }, 5000);
     };
 
-    elements.form.addEventListener('submit', (e) => {
+    const getRss = (e) => {
       e.preventDefault();
       const formValue = new FormData(e.target);
       const value = formValue.get('url');
@@ -86,7 +87,6 @@ const app = () => {
       }).then(() => {
         if (watcher.urlValidation === 'valid') {
           watcher.downloadStatus = 'in-process';
-          watcher.loadingData = 'loading';
           axios.get(routes.getPathRss(value)).then((response) => {
             const data = parser(response.data.contents);
             if (!data) {
@@ -97,9 +97,7 @@ const app = () => {
               watcher.posts = posts.concat(watcher.posts);
               watcher.downloadStatus = 'success';
               watcher.parsingError = false;
-              if (watcher.status.loadingData === 'loading') {
-                updatePosts();
-              }
+              updatePosts();
             }
           }).catch((error) => {
             const { message } = error;
@@ -108,7 +106,7 @@ const app = () => {
             }
             if (message === 'parsingError') {
               watcher.rssForm.urls.shift();
-              watcher.parseingError = true;
+              watcher.parsingError = true;
             }
           }).then(() => {
             watcher.parsingError = null;
@@ -118,7 +116,9 @@ const app = () => {
           });
         }
       });
-    });
+    };
+
+    elements.form.addEventListener('submit', getRss);
 
     elements.postsContainer.addEventListener('click', (e) => {
       const elem = e.target;
