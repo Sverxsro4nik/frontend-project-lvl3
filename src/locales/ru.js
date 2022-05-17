@@ -8,6 +8,7 @@ export default {
     valid: 'RSS успешно загружен',
     invalid: 'Ссылка должна быть валидным URL',
     parsingError: 'Ресурс не содержит валидный RSS',
+    loading: 'Подождите, ресурс загружается',
     duplication: 'RSS уже существует',
     feeds: 'Фиды',
     posts: 'Посты',

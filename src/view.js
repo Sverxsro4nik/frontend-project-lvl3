@@ -52,6 +52,7 @@ const view = (state, elements, text) => onChange(state, (path, current) => {
         rssExample.textContent = text.t('');
         rssInput.setAttribute('readonly', true);
         addButton.setAttribute('disabled', true);
+        feedback.textContent = text.t('loading');
         break;
       case 'start':
         rssInput.removeAttribute('readonly');
