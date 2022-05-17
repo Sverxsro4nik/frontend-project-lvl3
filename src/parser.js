@@ -5,7 +5,7 @@ const parser = (data) => {
   const parseError = parcingData.querySelector('parsererror');
 
   if (parseError) {
-    return null;
+    throw new Error('parsingError');
   }
 
   const feedId = parcingData.querySelector('link').textContent.trim();

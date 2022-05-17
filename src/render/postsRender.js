@@ -23,7 +23,7 @@ const postsRender = (container, state) => {
     item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
     const link = document.createElement('a');
-    const actualClass = readedPosts.includes(postId) ? 'fw-normal link-secondary' : 'fw-bold';
+    const actualClass = readedPosts.has(postId) ? 'fw-normal link-secondary' : 'fw-bold';
 
     link.setAttribute('class', actualClass);
     link.setAttribute('data-post-id', postId);

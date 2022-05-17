@@ -7,10 +7,13 @@ import resources from './locales/locales.js';
 import parser from './parser.js';
 
 const routes = {
-  getPathRss: (path) => `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(path)}`,
+  getPathRss: (path) => {
+    const mainUrl = new URL('/get?', 'https://allorigins.hexlet.app');
+    mainUrl.searchParams.append('disableCache', true);
+    mainUrl.searchParams.append('url', path);
+    return mainUrl;
+  },
 };
-
-// http://lorem-rss.herokuapp.com/feed
 
 const app = () => {
   const defaultLanguage = 'ru';
@@ -27,7 +30,7 @@ const app = () => {
       },
       feeds: [],
       posts: [],
-      readedPosts: [],
+      readedPosts: new Set(),
       postForModal: {},
       urlValidation: '',
       downloadStatus: 'start',
@@ -123,8 +126,8 @@ const app = () => {
     elements.postsContainer.addEventListener('click', (e) => {
       const elem = e.target;
       const id = elem.dataset.postId;
-      if (id && !watcher.readedPosts.includes(id)) {
-        watcher.readedPosts.push(id);
+      if (id && !watcher.readedPosts.has(id)) {
+        watcher.readedPosts.add(id);
       }
       const actualPost = watcher.posts.find((post) => post.postId === id);
       watcher.postForModal = actualPost;
